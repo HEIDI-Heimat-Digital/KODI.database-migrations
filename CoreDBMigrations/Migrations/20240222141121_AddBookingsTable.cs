@@ -2,7 +2,7 @@ using FluentMigrator;
 
 namespace DatabaseMigrations.Migrations
 {
-    [Migration(20231211102561)]
+    [Migration(20240222141121)]
     public class AddBookingsTable : Migration
     {
         public override void Up()
@@ -10,13 +10,18 @@ namespace DatabaseMigrations.Migrations
             string sql =
                @"DROP TABLE IF EXISTS bookings;
                CREATE TABLE bookings (
-                id INT PRIMARY KEY NOT NULL,
-                slotId INT,
+                id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+                appointmentId INT,
+                createdAT DATETIME,
+                startTime DATETIME,
+                endTime DATETIME,
                 userId INT,
                 guestId INT,
                 isGuest BOOLEAN,
-                description TEXT,
-                FOREIGN KEY (slotId) REFERENCES slots(id),
+                remark TEXT,
+                createdBy INT,
+                isCreatedByGuest BOOLEAN,
+                FOREIGN KEY (appointmentId) REFERENCES appointments(id),
                 FOREIGN KEY (guestId) REFERENCES guests(id),
                 FOREIGN KEY (userId) REFERENCES users(id)
             );";
